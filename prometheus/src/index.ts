@@ -2,6 +2,8 @@ import express from "express";
 import client from "prom-client";
 import { metricsMiddleware } from "./monitoring/middleware";
 
+//do cd prometheus and then  docker-compose up
+
 const app = express();
 
 app.use(metricsMiddleware); // this middleware will increment the request counter , gauge , histograms
@@ -22,7 +24,7 @@ app.get("/user", async (req, res) => {
 });
 
 app.get("/",(req,res)=>{
-    res.send("Hello World");
+    res.send("Hello World").status(200);
 })
 
 app.listen(3000, () => {
