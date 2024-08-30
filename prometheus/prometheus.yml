@@ -1,5 +1,11 @@
 global:
   scrape_interval: 15s # How frequently to scrape targets
+  # in global section we can define the global configurations for the prometheus server such as scrape_interval 
+  # which is the interval at which the prometheus server will scrape the metrics from the targets
+  # and we can also define the evaluation_interval which is the interval at which the prometheus server will evaluate the rules
+  # and we can also define the scrape_timeout which is the timeout for scraping metrics from the targets
+  # and we can also define the external_labels which is the labels that will be added to the metrics that are scraped from the targets
+  # ansd can give smtp configurations for alerting like emails
 
 scrape_configs:
   - job_name: 'nodejs-app'

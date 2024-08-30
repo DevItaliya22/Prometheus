@@ -23,6 +23,15 @@ export const metricsMiddleware = (req: Request, res: Response, next: NextFunctio
             code: res.statusCode
         }, endTime - startTime);
 
+        //this is the other way to observe the histogram , here we can see that we are not passing any labels, we are
+        //just passing the value of the duration and now it will store logs as how much exact time it took to complete the request
+        // this is the worst way to observe the histogram as the req can take 0.11s or 0.12s or 0.13s and it will store all the logs
+        // and basically it will store the logs for every request and it will be very difficult to analyze the data
+        //  as there will be infinite logs at the end
+        // httpRequestDurationMicroseconds.observe({
+        //     value : endTime - startTime
+        // })
+
         activeRequestsGauge.dec(); // Decrement the active requests gauge   
     });
 

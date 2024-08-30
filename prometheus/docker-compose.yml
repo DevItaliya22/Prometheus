@@ -1,4 +1,3 @@
-version: '3.8'
 # we have to use docker-compose version 3.8 to use the networks feature , because if we start prometheus in a container
 #  and we want to scrape the metrics from another container we have to use the networks feature
 # we cant access our localhost from a container of prometheus 
@@ -12,6 +11,9 @@ version: '3.8'
 # networks: - monitoring means connect this container to the monitoring network
 # networks: monitoring means create a network called monitoring
 # now we have used monitoring as network for both the containers so they can communicate with each other , same name will communicate 
+# and similarly we can use the same network for grafana container also
+version: '3.8'
+
 services:
   node-app:
     build: ./
@@ -28,6 +30,15 @@ services:
       - "9090:9090"
     networks:
       - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    networks:
+      - monitoring
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 networks:
   monitoring:
