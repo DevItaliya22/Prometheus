@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s # How frequently to scrape targets
+
+scrape_configs:
+  - job_name: 'nodejs-app'
+    static_configs:
+      - targets: ['node-app:3000']
+      # here node-app is the name of the service in the docker-compose file , we are using node-app as our locaolhot:3000 service 

@@ -1,0 +1,33 @@
+version: '3.8'
+# we have to use docker-compose version 3.8 to use the networks feature , because if we start prometheus in a container
+#  and we want to scrape the metrics from another container we have to use the networks feature
+# we cant access our localhost from a container of prometheus 
+# so we have to use the networks feature to connect the prometheus container to the node-app container
+# here build:./ means build this folders Dockerfile 
+# ports: ["3000:3000"] means map the port 3000 of the container to the port 3000 of the host machine
+# networks: - monitoring means connect this container to the monitoring network
+# image: prom/prometheus:latest means use the latest version of the prometheus image
+# volumes: - ./:/etc/prometheus means mount the current directory to the /etc/prometheus directory of the container
+# ports: ["9090:9090"] means map the port 9090 of the container to the port 9090 of the host machine
+# networks: - monitoring means connect this container to the monitoring network
+# networks: monitoring means create a network called monitoring
+# now we have used monitoring as network for both the containers so they can communicate with each other , same name will communicate 
+services:
+  node-app:
+    build: ./
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./:/etc/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
